@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="nl" class="fullscreen">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="minimal-ui, width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no,  shrink-to-fit=no">
+    <title>Socket.io backend</title>
+    <link rel="icon" href="/favicon/favicon-32x32.png" type="image/x-icon">
+    <link href="/lib/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/style.css">
+  </head>
+
+  <body class="index">
+    <div class="container">
+      <div id="content">
+        <div class="row justify-content-center">
+          <h1>Socket.io backend</h1>
+          <div id="screenSyncword" class="col-md-4 align-self-center">
+            <h2>Choose a syncword</h2>
+
+            <div class="form-group">
+              <input type="text" class="form-control" id="syncwordInput" placeholder="Enter syncword">
+              <a href="#" id="syncwordButton" class="btn btn-primary">Send</a>
+            </div>
+          </div>
+          <div id="screenActiveSyncword" class="col-md-4 align-self-center hidden">
+
+            <h2>Send a message</h2>
+            <div class="form-group">
+              <input type="text" class="form-control" id="message" placeholder="Enter message">
+              <a href="#" id="messageButton" class="btn btn-primary">Send</a>
+            </div>
+
+            <h3>Message on display</h3>
+            <div id="messageDisplay"></div>
+
+            <h3>Button state</h3>
+            <div id="buttonState"></div>
+
+          </div>
+        </div>
+      </div>
+
+      <script src="/lib/bootstrap.bundle.min.js"></script>
+      <script src="/lib/jquery.min.js"></script>
+      <script src="/lib/socket.io.min.js"></script>
+      <script src="/index.js"></script>
+      <script>
+        var socket = io();
+      </script>
+
+    </body>
+
+  </html>
