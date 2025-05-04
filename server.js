@@ -51,10 +51,10 @@ io.on("connection", function (socket) {
       } else {
         payload = args[0];
       }
-      io.emit(event, payload);
+      socket.broadcast.emit(event, payload); // broadcast to all clients
     } catch (e) {
       console.log("Error parsing JSON:", e);
-      io.emit(event, {message: "Error parsing message"});
+      socket.emit(event, {message: "Error parsing message"}); // send error to sender
     }
   });
 });
