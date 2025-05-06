@@ -51,6 +51,11 @@ io.on("connection", function (socket) {
       } else {
         payload = args[0];
       }
+
+      if (payload && payload.message) {
+        socket.emit(event, payload); // also send back to sender
+      }
+      
       socket.broadcast.emit(event, payload); // broadcast to all clients
     } catch (e) {
       console.log("Error parsing JSON:", e);
