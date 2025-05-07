@@ -39,6 +39,17 @@ io.on("connection", function (socket) {
     helpers.logMessage("disconnect", message, connId, msg);
   });
 
+  socket.on("joinRoom", function (room, callback) {
+    socket.join(room);
+    var message = "a client joined room: " + room;
+    helpers.logMessage("joinRoom", message, connId, room);
+    if (callback) {
+      callback(message);
+    } else {
+      socket.emit("response", message);
+    }
+  });
+
   socket.onAny((event, ...args) => {
     console.log(`Received event: ${event}`);
     console.log("With arguments:", args);
@@ -52,11 +63,10 @@ io.on("connection", function (socket) {
         payload = args[0];
       }
 
-      if (payload && payload.message) {
-        socket.emit(event, payload); // also send back to sender
+      if (payload && payload.syncword) {
+        io.to(payload.syncword).emit("update", payload); // send to all clients in the room
       }
-      
-      socket.broadcast.emit(event, payload); // broadcast to all clients
+
     } catch (e) {
       console.log("Error parsing JSON:", e);
       socket.emit(event, {message: "Error parsing message"}); // send error to sender

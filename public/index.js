@@ -15,14 +15,17 @@ $(document).ready(function () {
     $("#screenSyncword").hide();
     $("#screenActiveSyncword").show();
 
-
     syncword = $("#syncwordInput").val();
     console.log("Syncword set to:", syncword);
-    socket.emit(syncword, {
-      message: "syncword connected:\n\n" + syncword
+    socket.emit("joinRoom", syncword, function (message) {
+      console.log("response:", message);
+      socket.emit("textUpdate", {
+        syncword: syncword,
+        message: "join room: " + syncword
+      });
     });
 
-    socket.on(syncword, function (data) {
+    socket.on("update", function (data) {
       console.log("Received data:", data);
 
       if (data && data.message != null) {
@@ -37,7 +40,8 @@ $(document).ready(function () {
   $("#screenActiveSyncword").on("click", "#messageButton", function (e) {
     e.preventDefault();
 
-    socket.emit(syncword, {
+    socket.emit("textUpdate", {
+      syncword: syncword,
       message: $("#message").val()
     });
   });
