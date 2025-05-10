@@ -4,7 +4,6 @@ let path = require("path");
 var fs = require("fs");
 
 var helpers = require("./helpers");
-const {serialize} = require("v8");
 
 require("dotenv").config();
 
@@ -19,10 +18,6 @@ app.get("/", function (req, res) {
 
 var http = require("http").createServer(app);
 var io = require("socket.io")(http);
-
-io.on("connection", socket => {
-  socket.join("some room");
-});
 
 io.on("connection", function (socket) {
   var connId = false;
