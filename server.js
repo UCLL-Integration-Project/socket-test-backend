@@ -1,11 +1,8 @@
 var express = require("express");
 const bodyParser = require("body-parser");
 let path = require("path");
-var fs = require("fs");
 
 var helpers = require("./helpers");
-
-require("dotenv").config();
 
 let app = express();
 app.use(express.static(path.join(__dirname, "public")));
@@ -69,7 +66,8 @@ io.on("connection", function (socket) {
   });
 });
 
-var port = process.env.PORT;
+var port = 8890; // this is the port for the server to listen on for http and socket connections
+// see nginx/socket-test-backend.conf for the nginx configuration that proxies to this server to port 80 (and 433 for https)
 
 http.listen(port, function () {
   console.log("listening on *:" + port);
